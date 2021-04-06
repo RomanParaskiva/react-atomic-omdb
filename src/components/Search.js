@@ -25,7 +25,7 @@ const Search = (props) => {
         type="text" 
       />
 
-      <input onClick={runSearch} type="submit" value="SEARCH" />
+      <input onClick={runSearch} type="submit" value="ИСКАТЬ" />
     </form>
   )
 }
