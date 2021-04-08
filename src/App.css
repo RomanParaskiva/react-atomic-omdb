@@ -15,13 +15,15 @@
   cursor: pointer;
 }
 
-.spinner {
-  height: 80px;
-  margin: auto;
-}
-
 .App-intro {
   font-size: large;
+}
+
+.preloader{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 /* new css for movie component */
@@ -31,10 +33,17 @@
 }
 
 .movies {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+.movies>a{
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+
 
 .App-header h2 {
   margin: 0;
@@ -52,7 +61,17 @@
 
 .movie {
   padding: 5px 25px 10px 25px;
-  max-width: 25%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.movie img{
+  width: 100%;
+}
+
+.movie h5 {
+  font-size: 1.3rem;
 }
 
 .errorMessage {
@@ -71,20 +90,10 @@
 }
 
 
-input[type="submit"] {
-  padding: 5px;
-  background-color: transparent;
-  color: black;
-  border: 1px solid black;
+button[type="submit"] {
   width: 80px;
-  margin-left: 5px;
+  margin-left: 10px;
   cursor: pointer;
-}
-
-
-input[type="submit"]:hover {
-  background-color: #282c34;
-  color: antiquewhite;
 }
 
 
@@ -93,20 +102,45 @@ input[type="submit"]:hover {
   min-width: 170px;
 }
 
+.modal {
+  height: 90%;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  display: flex;
+  background-color: #fff;
+  z-index: 50;
+  padding: 10px;
+}
+
+.modal .left, .modal .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal .left img{
+  width: 100%;
+}
+
 @media screen and (min-width: 694px) and (max-width: 915px) {
-  .movie {
-    max-width: 33%;
+  .movies {
+    grid-template-columns: 1fr 1fr 1fr ;
   }
 }
 
 @media screen and (min-width: 652px) and (max-width: 693px) {
-  .movie {
-    max-width: 50%;
+  .movies {
+    grid-template-columns: 1fr 1fr ;
   }
 }
 
 
 @media screen and (max-width: 651px) {
+  .movies {
+    grid-template-columns: 1fr;
+  }
   .movie {
     max-width: 100%;
     margin: auto;

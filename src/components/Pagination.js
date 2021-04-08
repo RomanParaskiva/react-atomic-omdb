@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import materialize from 'materialize-css'
+
 
 const Pagination = (props) => {
-  const [page, setPage] = useState(1)
-
   return (
     <ul className="pagination">
-      <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>
-      <li className="active"><a href="#!">1</a></li>
-      <li className="waves-effect"><a href="#!">2</a></li>
-      <li className="waves-effect"><a href="#!">3</a></li>
-      <li className="waves-effect"><a href="#!">4</a></li>
-      <li className="waves-effect"><a href="#!">{props.total}</a></li>
-      <li className="waves-effect"><a href="#!"><i className="material-icons">chevron_right</i></a></li>
+      <li className="disabled"><a href="#!" onClick={props.prevPage}><i className="material-icons">chevron_left</i></a></li>
+      <li className="active"><a href="#!">{props.page}</a></li>
+      <li className="waves-effect"><a href="#!">{props.page + 1}</a></li>
+      <li className="waves-effect"><a href="#!">{props.page + 2}</a></li>
+      <li className="waves-effect"><a href="#!">{props.page + 3}</a></li>
+      <li className="waves-effect"><a href="#!">...</a></li>
+      <li className="waves-effect"><a href="#!">{props.pageTotal}</a></li>
+      <li className="waves-effect"><a href="#!" onClick={props.nextPage}><i className="material-icons">chevron_right</i></a></li>
     </ul>
   )
 }

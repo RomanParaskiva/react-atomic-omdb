@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
+import React, {useEffect} from 'react'
 
 const Search = (props) => {
-  const [searchValue, setSearchValue] = useState('')
+  
+useEffect(() => {
+  document.querySelector('.clear').addEventListener('click', () => {
+    props.clearSearchValue()
+  })
+}, [props])
 
-  const handleSearchValue = (e) => {
-    setSearchValue(e.target.value)
-  }
-
-  const clearSearchValue = () => {
-    setSearchValue('')
-  }
-
-  const runSearch = (e) => {
-    e.preventDefault()
-    props.search(searchValue)
-    clearSearchValue()
-  }
 
   return (
-    <form className="search">
-      <input 
-        value={searchValue}
-        onChange={handleSearchValue}
-        type="text" 
-      />
+    <form className="search col s12">
+      <div className="row">
+      <i className="material-icons clear">clear</i>
+        <div className="input-field inline">
+          <input
+            id="search"
+            value={props.searchValue}
+            onChange={props.handleSearchValue}
+            type="text"
+            className="validate"
+          />
+          <label htmlFor="search">Поиск</label>
+        </div>
 
-      <input onClick={runSearch} type="submit" value="ИСКАТЬ" />
+        <button className="waves-effect waves-light btn-small" onClick={props.runSearch} type="submit">искать</button>
+      </div>
     </form>
   )
 }
