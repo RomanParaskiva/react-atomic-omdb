@@ -14,7 +14,7 @@ import './App.css'
 
 
 M.AutoInit()
-const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&page="
+const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&language=ru&page="
 
 
 
@@ -45,7 +45,7 @@ const App = () => {
 
     const queryStr = '&query=',
       pageStr = '&page=',
-      url = 'https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&include_adult=true&language=ru'
+      url = 'https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&language=ru'
       
     page = page === undefined ? '' : page 
 
@@ -100,7 +100,7 @@ const App = () => {
 
   return (
     <div className="App">
-        {modalOpen && <MovieInfo movie={movies.filter(item => item.id == modalId)[0]}/>}
+        {modalOpen && <MovieInfo movie={movies.filter(item => item.id == modalId)[0]} openHandler={openHandler}/>}
       <Header text="Фильмопоиск" />
       <Search 
         searchValue={searchValue}

@@ -35,6 +35,8 @@
 .movies {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .movies>a{
@@ -64,6 +66,8 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  position: relative;
+  height: 100%;
 }
 
 .movie img{
@@ -72,6 +76,65 @@
 
 .movie h5 {
   font-size: 1.3rem;
+}
+
+.movie__img-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.movie__reviews{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #8a2be2e8;
+  color: #fff;
+  overflow: auto;
+  max-height: 100%;
+  height: 0%;
+  opacity: 0;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  text-align: justify;
+  transition: all .6s;
+}
+
+::-webkit-scrollbar-button {
+  background-image: none;
+  background-repeat:no-repeat;
+  width:5px;
+  height:0px
+  }
+  
+  ::-webkit-scrollbar-track {
+  background-color:#ecedee
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background-color:dodgerblue;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover{
+  background-color:#56999f;
+  }
+  
+  ::-webkit-resizer{
+  background-image: none;
+  background-repeat:no-repeat;
+  width:4px;
+  height:0px
+  }
+  
+  ::-webkit-scrollbar{
+  width: 4px;
+  }
+
+.movie:hover .movie__reviews{
+  height: 100%;
+  opacity: 1;
 }
 
 .errorMessage {
@@ -107,7 +170,6 @@ button[type="submit"] {
   position: fixed;
   top: 10%;
   left: 0;
-  display: flex;
   background-color: #fff;
   z-index: 50;
   padding: 10px;
@@ -122,6 +184,27 @@ button[type="submit"] {
 
 .modal .left img{
   width: 100%;
+}
+
+.modal .right{
+  padding-left: 20px;
+}
+
+.modal .right ul{
+  overflow: auto;
+  height: 100%;
+}
+
+.modal .right ul li{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.modal .right ul li img {
+  max-width: 100px;
 }
 
 @media screen and (min-width: 694px) and (max-width: 915px) {

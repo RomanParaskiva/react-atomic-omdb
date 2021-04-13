@@ -6,6 +6,7 @@ const MovieInfo = ({ movie, openHandler }) => {
         [actors, setActors] = useState([])
     let actorsList, filmsList = []
 
+
     const handler = () => {
         openHandler(null)
     }
@@ -17,11 +18,9 @@ const MovieInfo = ({ movie, openHandler }) => {
 
     const getPersonMovies = async (e) => {
         const res = await axios(`https://api.themoviedb.org/3/person/${e.target.dataset.id}/movie_credits?api_key=15f70723a36f993b310bad745e6681ed&language=ru-RU`)
-        console.log(res)
         filmsList = res.data.cast.map(item =>
             <img alt={item.character} src={IMG_API_URL + item.backdrop_path} />
         )
-        console.log(filmsList)
     }
 
     useEffect(() => {
@@ -38,7 +37,7 @@ const MovieInfo = ({ movie, openHandler }) => {
 
 
     return (
-        <div className="modal card-panel">
+        <div className="modal card-panel" style={{display: 'flex'}}>
             <i className="material-icons modal-close" onClick={handler}>clear</i>
             <ul>
                 { filmsList ? filmsList : '' }
