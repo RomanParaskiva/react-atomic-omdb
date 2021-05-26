@@ -14,6 +14,7 @@ const Movie = ({
 
   const handler = () => {
     openHandler(movie.id)
+    document.body.style.overflow = "hidden"
   }
   return (
     <a onClick = {handler} href = "#!">

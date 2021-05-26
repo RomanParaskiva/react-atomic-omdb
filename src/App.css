@@ -12,7 +12,6 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 20px;
-  cursor: pointer;
 }
 
 .App-intro {
@@ -166,13 +165,35 @@ button[type="submit"] {
 }
 
 .modal {
-  height: 90%;
+  height: 100vh;
+  width: 100vw;
   position: fixed;
-  top: 10%;
+  top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.205);
   z-index: 50;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 100%;
+}
+
+.modal__wrapper{
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  background-color: #fff;
+  border-radius: 5px;
+  position: relative;
+  padding: 35px;
+}
+
+.modal-close{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: inherit;
 }
 
 .modal .left, .modal .right {
@@ -207,6 +228,20 @@ button[type="submit"] {
   max-width: 100px;
 }
 
+@media (max-width: 768px){
+  .modal__wrapper{
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+  }
+  .modal .left, .modal .right {
+    width: 100%;
+  }
+  .modal .right ul{
+    overflow:initial;
+  }
+}
+
 @media screen and (min-width: 694px) and (max-width: 915px) {
   .movies {
     grid-template-columns: 1fr 1fr 1fr ;
@@ -220,7 +255,7 @@ button[type="submit"] {
 }
 
 
-@media screen and (max-width: 651px) {
+@media (max-width: 651px) {
   .movies {
     grid-template-columns: 1fr;
   }
