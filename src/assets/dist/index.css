@@ -10,15 +10,21 @@
   background-color: #282c34;
   height: 70px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 20px;
 }
-.App-header h2 {
+.App-header .header-title {
+  margin-right: auto;
+}
+.App-header .header-title h2 {
   margin: 0;
+}
+.App-header a, .App-header span {
+  color: inherit;
+  font-size: 14px;
+  margin-right: 15px;
 }
 
 .App-intro {
@@ -153,54 +159,16 @@ button[type=submit] {
 }
 
 .movie__info {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.205);
-  z-index: 50;
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 100%;
 }
-.movie__info .left,
-.movie__info .right {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.movie__info .left img {
-  width: 100%;
-}
-.movie__info .right {
-  padding-left: 20px;
-}
-.movie__info .right ul {
-  overflow: auto;
-  height: 100%;
-}
-.movie__info .right ul li {
-  width: 100%;
-  background-color: rgba(102, 102, 102, 0.055);
-  padding: 5px;
-  margin: 10px 0;
-}
-.movie__info .right ul li a {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: inherit;
-}
-.movie__info .right ul li a img {
-  max-width: 70px;
-}
-
-.movie__info-wrapper {
+.movie__info .movie__info-wrapper {
   width: 90vw;
   height: 90vh;
   display: flex;
@@ -209,20 +177,144 @@ button[type=submit] {
   position: relative;
   padding: 35px;
 }
+.movie__info .movie__info-wrapper .left,
+.movie__info .movie__info-wrapper .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+}
+.movie__info .movie__info-wrapper .left img {
+  width: auto;
+  max-height: 400px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+.movie__info .movie__info-wrapper .right {
+  padding-left: 20px;
+}
+.movie__info .movie__info-wrapper .right ul {
+  overflow: auto;
+  height: 100%;
+}
+.movie__info .movie__info-wrapper .right ul li {
+  width: 100%;
+  background-color: rgba(102, 102, 102, 0.055);
+  padding: 5px;
+  margin: 10px 0;
+}
+.movie__info .movie__info-wrapper .right ul li a {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: inherit;
+}
+.movie__info .movie__info-wrapper .right ul li a img {
+  max-width: 70px;
+}
+
+.person-wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  max-width: 1200px;
+  padding: 20px;
+  margin: 0 auto;
+}
+.person-wrapper .left,
+.person-wrapper .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  height: max-content;
+  overflow-y: auto;
+}
+.person-wrapper .left {
+  background-color: rgba(102, 102, 102, 0.103);
+  padding: 10px;
+  border-radius: 5px;
+}
+.person-wrapper .left .person__img-wrapper img {
+  max-width: 250px;
+}
+.person-wrapper .left .person__info {
+  display: flex;
+  flex-direction: column;
+}
+.person-wrapper .left .person__info p {
+  text-align: left;
+}
+.person-wrapper .right {
+  height: 100%;
+  overflow-y: hidden;
+}
+.person-wrapper .right ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  height: 100%;
+  overflow-y: scroll;
+}
+.person-wrapper .right ul .film-list__item {
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: rgba(102, 102, 102, 0.103);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.person-wrapper .right ul .film-list__item a {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: inherit;
+}
+.person-wrapper .right ul .film-list__item a .film-list__item-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.person-wrapper .right ul .film-list__item a .film-list__item-info h4 {
+  font-size: 20px;
+}
+.person-wrapper .right ul .film-list__item a img {
+  max-width: 100px;
+}
 
 @media (max-width: 768px) {
-  .movie__info-wrapper {
+  .App-header h2 {
+    font-size: 16px;
+  }
+
+  .movie__info .movie__info-wrapper {
     flex-direction: column;
     overflow-y: auto;
     height: 100%;
+    padding: 5px;
   }
-
-  .movie__info .left,
-.movie__info .right {
+  .movie__info .movie__info-wrapper .left,
+.movie__info .movie__info-wrapper .right {
     width: 100%;
   }
-  .movie__info .right ul {
+  .movie__info .movie__info-wrapper .left img {
+    width: 100%;
+  }
+  .movie__info .movie__info-wrapper .right ul {
     overflow: initial;
+  }
+
+  .person-wrapper {
+    flex-direction: column;
+    height: 100%;
+  }
+  .person-wrapper .left,
+.person-wrapper .right {
+    width: 100%;
+  }
+  .person-wrapper .left {
+    overflow-y: unset;
   }
 }
 @media screen and (min-width: 694px) and (max-width: 915px) {

@@ -1,62 +1,54 @@
 import React, { useState, useEffect } from 'react'
 
-
 import Movie from '../components/Movie'
 import Search from '../components/Search'
 import Pagination from '../components/Pagination'
 import Preloader from '../components/Preloader'
-import MovieInfo from '../components/MovieInfo'
 
-import axios from 'axios'
+import {useHttp} from '../hooks/http.hook'
 
 const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&language=ru&include_adult=true&page="
 
 const HomePage = () => {
-    let [loading, setLoading] = useState(true),
-    [movies, setMovies] = useState([]),
+    const [movies, setMovies] = useState([]),
     [errorMessage, setErrorMessage] = useState(null),
     [page, setPage] = useState(1),
     [pageTotal, setPageTotal] = useState(0),
-    [searchValue, setSearchValue] = useState('')
+    [searchValue, setSearchValue] = useState(''),
+    {loading, request} = useHttp()
 
-  const fetchData = async () => {
-    const res = await axios(MOVIE_API_URL)
-    setMovies(res.data.results)    
-  }
+  
+ 
+getMovies()
+  useEffect(async() => {
 
-  useEffect(() => {
-    fetchData()
-    setLoading(false)
+    const data = await request(MOVIE_API_URL)
+  setMovies(data.results)  
   }, [])
 
   const search = async () => {
-    setLoading(true)
-    setErrorMessage(null)
 
     const queryStr = '&query=',
       pageStr = '&page=',
       url = 'https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&include_adult=true&language=ru'
       
-    page = page === undefined ? '' : page 
+    page === undefined ? setPage(0) : setPage(page)
 
-
-    const res = await axios(url + queryStr + searchValue + pageStr + page)
-    console.log(res)
-    res.data.results && setMovies(res.data.results)
-    setPage(res.data.page)
-    setPageTotal(res.data.total_pages)
-    res.data.status_message && setErrorMessage(res.data.status_message)
-    setLoading(false)
-   
+    const data = await request(url + queryStr + searchValue + pageStr + page)
+    console.log(data)
+    data.results && setMovies(data.results)
+    setPage(data.page)
+    setPageTotal(data.total_pages)
+    data.status_message && setErrorMessage(data.status_message)   
   }
 
   const nextPage = () => {
-    setPage(page++)
+    setPage(page + 1)
     search()
   }
 
   const prevPage = () => {
-    setPage(page--)
+    setPage(page - 1)
     search()
   }
 
