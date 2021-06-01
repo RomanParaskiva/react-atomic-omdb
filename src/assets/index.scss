@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 .App {
     text-align: center;
 }
@@ -31,6 +35,8 @@
     }
 
     .switch {
+        display: flex;
+        margin-right: 10px;
         input {
             display: none;
         }
@@ -270,6 +276,7 @@ button[type="submit"] {
         background-color: rgba(102, 102, 102, 0.103);
         padding: 10px;
         border-radius: 5px;
+        overflow-x: hidden;
         .person__img-wrapper {
 
             img {
