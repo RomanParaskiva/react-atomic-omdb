@@ -27,6 +27,13 @@
         color: inherit;
         font-size: 14px;
         margin-right: 15px;
+        cursor: pointer;
+    }
+
+    .switch {
+        input {
+            display: none;
+        }
     }
 }
 

@@ -17,13 +17,13 @@ const Header = (props) => {
         <div className="switch">
           <label>
             Фильмы
-            <input type="checkbox" name="changeSearch"/>
+            <input type="checkbox" name="changeSearch" />
             <span className="lever"></span>
             Сериалы
           </label>
         </div>
         <Link to="/" >Главная</Link>
-        <span className="" onClick={goBack}>Назад</span>
+        <span className="back-btn" onClick={goBack}>Назад</span>
       </header>
     )
   } else {

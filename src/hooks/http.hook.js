@@ -1,4 +1,4 @@
-import  {useState, useCallback} from 'react'
+import { useState, useCallback } from 'react'
 import axios from 'axios'
 
 export const useHttp = () => {
@@ -8,13 +8,14 @@ export const useHttp = () => {
         try {
             setLoading(true)
             const res = await axios(url)
-            if (res.status === 200){
+            if (res.status === 200) {
                 setLoading(false)
-                return res.data 
+                return res.data
             }
-         
-        } catch (e) {}
-    },[])
+            setLoading(false)
+            return false
+        } catch (e) { }
+    }, [])
 
-    return {loading, request}
+    return { loading, request }
 }

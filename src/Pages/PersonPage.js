@@ -1,69 +1,38 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { FilmListItem } from '../components/FilmListItem'
 import Preloader from '../components/Preloader'
+import { useHttp } from '../hooks/http.hook'
+import { useOptions } from '../hooks/options.hook'
+import { usePerson } from '../hooks/person.hook'
 
 const PersonPage = () => {
-    const IMG_API_URL = "https://image.tmdb.org/t/p/w500",
-        DEFAULT_PLACEHOLDER_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png",
-        [loading, setLoading] = useState(false),
+        const { id } = useParams(),
+        [personId, setPersonId] = useState(null),
         [person, setPerson] = useState({}),
-        [filmList, setFilmList] = useState([]),
-        { id } = useParams()
+        [films, setFilms] = useState([]),
+        {loading} = useHttp(),
+        {IMG_API_URL, DEFAULT_PLACEHOLDER_IMAGE, formatDate} = useOptions(),
+        {getFilmList, getPersonInfo} = usePerson()
+      
+        useEffect(()=> {
+           setPersonId(id)
+           getData()
+        },[id])
 
 
+        const getData = async () => {
+            const filmsData = await getFilmList(personId),
+            personData = await getPersonInfo(personId)
 
-
-
-    const getPersonInfo = async (id) => {
-        const res = await axios(`https://api.themoviedb.org/3/person/${id}?api_key=15f70723a36f993b310bad745e6681ed&language=ru-RU`)
-        res.status === 200 && setPerson(res.data)
-    }
-
-    const getFilmList = useCallback(async (id) => {
-        const res = await axios(`https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=15f70723a36f993b310bad745e6681ed&language=en-US`)
-        if (res.status === 200) {
-            const list = await res.data.cast.map((el, i) => {
-                return <li className="film-list__item" key={i}>
-                    <Link to={'/movie/' + el.id}>
-                        <div className="film-list__item-info">
-                            <h4>{el.title}</h4>
-                            <span>Дата выхода: {el.release_date ? formatDate(new Date(el.release_date)) : 'Неизвестно'}</span>
-                            <span>Роль: {el.character}</span>
-                            <span>Рейтинг: {el.vote_average}</span>
-                        </div>
-                        <img src={el.poster_path ? IMG_API_URL + el.poster_path : DEFAULT_PLACEHOLDER_IMAGE} alt={el.original_title} />
-                    </Link>
-                </li>
-            })
-            setFilmList(list)
+            console.log(filmsData)
+            filmsData && setFilms(filmsData.cast)
+            personData && setPerson(personData) 
         }
-    }, [])
+       
+         
 
-    const formatDate = (date) => {
-
-        let dd = date.getDate();
-        if (dd < 10) dd = '0' + dd;
-
-        let mm = date.getMonth() + 1;
-        if (mm < 10) mm = '0' + mm;
-
-        let yy = date.getFullYear()
-
-        return dd + '-' + mm + '-' + yy;
-    }
-   
-    useEffect(() => {
-       try {
-        setLoading(true)
-        getPersonInfo(id)
-        getFilmList(id)
-        setLoading(false)
-       } catch (e) {}
-    }, [id, getFilmList])
-
-
-
+ 
     if (!loading) {
         return (
             <div className="person-wrapper">
@@ -85,7 +54,7 @@ const PersonPage = () => {
                 <div className="right">
                     <h4>Фильмография</h4>
                     <ul className="person__film-list">
-                        {filmList}
+                        {films.map((item, i) => <FilmListItem key={i} item={item} />)}
                     </ul>
                 </div>
             </div>
