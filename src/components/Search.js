@@ -12,7 +12,7 @@ const Search = (props) => {
             value={props.searchValue}
             onChange={props.handleSearchValue}
             type="text"
-            className="validate"
+            className="validate browser-default"
           />
           <label htmlFor="search">Поиск</label>
         </div>

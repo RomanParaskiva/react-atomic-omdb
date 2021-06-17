@@ -2,8 +2,14 @@
   box-sizing: border-box;
 }
 
+html {
+  color: #d4d4d4;
+  font-weight: 600;
+}
+
 .App {
   text-align: center;
+  background-color: #282c3493;
 }
 
 .App-header {
@@ -12,11 +18,11 @@
   display: flex;
   align-items: center;
   font-size: calc(10px + 2vmin);
-  color: white;
   padding: 20px;
 }
 .App-header .header-title {
   margin-right: auto;
+  color: #8a2be275;
 }
 .App-header .header-title h2 {
   margin: 0;
@@ -82,6 +88,21 @@
 }
 .movie h5 {
   font-size: 1.3rem;
+}
+.movie .movie__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.movie .movie__footer .movie__title {
+  font-size: 10px;
+  text-transform: uppercase;
+  height: fit-content;
+}
+.movie .movie__footer .movie__raiting {
+  background-color: #8a2be275;
+  border-radius: 3px;
+  padding: 5px;
 }
 
 .movie__img-wrapper {
@@ -156,9 +177,25 @@
   justify-content: center;
   margin-top: 10px;
 }
+.search .col .row {
+  display: flex;
+  align-items: center;
+}
+.search .input-field label {
+  left: 25px;
+  top: -5px;
+  padding: 0.5rem 1.5rem;
+  width: 100%;
+  height: 100%;
+}
 .search input[type=text] {
   width: 40%;
   min-width: 170px;
+  background-color: transparent !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: 2px solid #8a2be275;
+  margin-bottom: 0;
 }
 
 button[type=submit] {
@@ -178,12 +215,14 @@ button[type=submit] {
   justify-content: center;
   max-height: 100%;
 }
+.movie__info .info__btn-wrapper div {
+  margin-right: 10px;
+}
 .movie__info .movie__info-wrapper {
   width: 90vw;
   height: 100%;
   overflow-y: auto;
   display: flex;
-  background-color: #fff;
   border-radius: 5px;
   position: relative;
   padding: 35px;
@@ -193,7 +232,6 @@ button[type=submit] {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow-y: scroll;
   margin: 0 auto;
 }
 .movie__info .movie__info-wrapper .screen img {

@@ -10,7 +10,7 @@ import M from 'materialize-css'
 import './assets/dist/index.css'
 
 
-M.AutoInit()
+M.AutoInit();
 
 const App = () => {
   const router = useRoutes(),

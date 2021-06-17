@@ -26,7 +26,7 @@ const HomePage = () => {
       setMovies(res.results)
     } catch (e) { }
   }
-
+  console.log(switcher)
 
   useEffect(() => {
     getFirstMovies()
