@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import Movie from '../components/Movie'
 import Search from '../components/Search'
-import Pagination from '../components/Pagination'
 import Preloader from '../components/Preloader'
+import Sidebar from '../components/Sidebar'
 
 import { useHttp } from '../hooks/http.hook'
 import { useOptions } from '../hooks/options.hook'
@@ -11,49 +11,46 @@ import { useOptions } from '../hooks/options.hook'
 import { SearchContext } from '../context/SearchContext'
 
 const HomePage = () => {
-  const switcher = useContext(SearchContext),
+  const { switcher } = useContext(SearchContext),
     [movies, setMovies] = useState([]),
-    [errorMessage, setErrorMessage] = useState(null),
     [page, setPage] = useState(1),
     [pageTotal, setPageTotal] = useState(0),
     [searchValue, setSearchValue] = useState(''),
     { loading, request } = useHttp(),
-    { MOVIE_API_URL } = useOptions()
+    { MOVIE_API_URL, SEARCH_API_URL } = useOptions(switcher),
+    [flag, setFlag] = useState(MOVIE_API_URL)
 
-  const getFirstMovies = async () => {
+
+
+  const fetchMovies = async (flag) => {
     try {
-      const res = await request(MOVIE_API_URL)
-      setMovies(res.results)
+      const queryStr = '&query=',
+        pageStr = '&page='
+
+      let url 
+
+      if (searchValue) {
+        url = SEARCH_API_URL + queryStr + searchValue
+      } else {
+        url = flag
+      }
+      const data = await request(url + pageStr + page)
+      
+      data.results && setMovies(data.results)
+      setPageTotal(data.total_pages)
+
     } catch (e) { }
   }
-  console.log(switcher)
+
+
 
   useEffect(() => {
-    getFirstMovies()
-  }, [])
+    fetchMovies(flag)
+  }, [switcher, searchValue, page, flag])
 
-  const search = async () => {
-    const queryStr = '&query=',
-      pageStr = '&page=',
-      url = `https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&language=ru`
-
-    page === undefined ? setPage(0) : setPage(page)
-
-    const data = await request(url + queryStr + searchValue + pageStr + page)
-    data.results && setMovies(data.results)
-    setPage(data.page)
-    setPageTotal(data.total_pages)
-    data.status_message && setErrorMessage(data.status_message)
-  }
 
   const nextPage = () => {
     setPage(page + 1)
-    search()
-  }
-
-  const prevPage = () => {
-    setPage(page - 1)
-    search()
   }
 
 
@@ -63,43 +60,40 @@ const HomePage = () => {
 
   const clearSearchValue = () => {
     setSearchValue('')
+    fetchMovies()
   }
 
   const runSearch = (e) => {
     e.preventDefault()
-    search(searchValue)
+    fetchMovies()
   }
-
-
-
-  const pagination = <Pagination
-    pageTotal={pageTotal}
-    page={page}
-    prevPage={prevPage}
-    nextPage={nextPage}
-  />
 
   return (
     <>
-      <Search
-        searchValue={searchValue}
-        handleSearchValue={handleSearchValue}
-        runSearch={runSearch}
-        clearSearchValue={clearSearchValue}
-      />
-      {switcher == 'movie' ? <p className="App-intro">Информация о любых фильмах</p> : <p className="App-intro">Информация о любых сериалах</p>}
+      <div className="search__wrapper">
+        <Sidebar setFlag={setFlag} />
+        <Search
+          searchValue={searchValue}
+          handleSearchValue={handleSearchValue}
+          runSearch={runSearch}
+          clearSearchValue={clearSearchValue}
+        />
 
-      {/* {pageTotal > 0 ? pagination : ''} */}
+      </div>
+      {switcher === 'movie' ? <p className="App-intro">Информация о любых фильмах</p> : <p className="App-intro">Информация о любых сериалах</p>}
+
       <div className="movies">
-        {loading && !errorMessage ? (
+        {loading ? (
           <Preloader />
-        ) : errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
         ) : (
-          movies.map((movie, index) => (
+          movies.length > 0 ? movies.map((movie, index) => (
             <Movie key={`${index}-${movie.title}`} movie={movie} />
-          ))
+          )) : <h3>Ничего не найдено :((</h3>
         )}
+      </div>
+
+      <div className="flex info__btn-wrapper">
+        <div className="waves-effect waves-light btn-small ma" onClick={nextPage}>Загрузить еще</div>
       </div>
 
     </>

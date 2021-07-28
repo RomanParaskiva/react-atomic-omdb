@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 import { MovieActorItem } from './MovieActorItem'
 import Preloader from './Preloader'
@@ -7,9 +7,12 @@ import { useHttp } from '../hooks/http.hook'
 import { useOptions } from '../hooks/options.hook'
 import { useMovie } from '../hooks/movie.hook'
 
+import { SearchContext } from '../context/SearchContext'
+
 const MovieInfo = ({ id }) => {
     const { loading } = useHttp(),
-        { getCredits, getMovie, getImgs } = useMovie(id),
+        {switcher} = useContext(SearchContext),
+        { getCredits, getMovie, getImgs } = useMovie(id, switcher),
         { IMG_API_URL } = useOptions(),
         [actors, setActors] = useState([]),
         [movie, setMovie] = useState({}),

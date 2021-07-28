@@ -1,11 +1,15 @@
 
-export const useOptions = () => {
+
+export const useOptions = (switcher) => {
    
     const IMG_API_URL = "https://image.tmdb.org/t/p/w500",
         DEFAULT_PLACEHOLDER_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png",
-        MOVIE_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&language=ru&page=`,
-        SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&language=ru`
-
+        MOVIE_API_URL = `https://api.themoviedb.org/3/${switcher}/popular?api_key=15f70723a36f993b310bad745e6681ed&language=ru&page=`,
+        SEARCH_API_URL = `https://api.themoviedb.org/3/search/${switcher}?api_key=15f70723a36f993b310bad745e6681ed&language=ru`,
+        TOP_API_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=15f70723a36f993b310bad745e6681ed&language=ru`,
+        NOW_API_URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=15f70723a36f993b310bad745e6681ed&language=ru`,
+        UPCOMING_API_URL = `https://api.themoviedb.org/3/movie/upcoming?api_key=15f70723a36f993b310bad745e6681ed&language=ru`
+        
         const formatDate = (date) => {
 
             let dd = date.getDate();
@@ -19,5 +23,5 @@ export const useOptions = () => {
             return dd + '-' + mm + '-' + yy;
         }
 
-        return {IMG_API_URL, DEFAULT_PLACEHOLDER_IMAGE, MOVIE_API_URL, SEARCH_API_URL, formatDate }
+        return {IMG_API_URL, DEFAULT_PLACEHOLDER_IMAGE, MOVIE_API_URL, SEARCH_API_URL, TOP_API_URL, NOW_API_URL, UPCOMING_API_URL, formatDate }
 }

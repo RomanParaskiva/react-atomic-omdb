@@ -4,7 +4,7 @@ const Search = (props) => {
 
   return (
     <form className="search col s12">
-      <div className="row">
+     
       {props.searchValue ? <i className="material-icons clear" onClick={props.clearSearchValue}>clear</i> : ''}
         <div className="input-field inline">
           <input
@@ -17,8 +17,7 @@ const Search = (props) => {
           <label htmlFor="search">Поиск</label>
         </div>
 
-        <button disabled={!props.searchValue} className="waves-effect waves-light btn-small" onClick={props.runSearch} type="submit">искать</button>
-      </div>
+        {/* <button disabled={!props.searchValue} className="waves-effect waves-light btn-small" onClick={props.runSearch} type="submit">искать</button> */}
     </form>
   )
 }

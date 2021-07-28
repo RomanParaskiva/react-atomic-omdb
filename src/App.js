@@ -14,11 +14,14 @@ M.AutoInit();
 
 const App = () => {
   const router = useRoutes(),
-    {switcher} = useSwitch()
+  {switcher, changeSwitcher} = useSwitch()
 
 
   return (
-    <SearchContext.Provider value={switcher}>
+    <SearchContext.Provider value={{
+      switcher,
+      changeSwitcher
+      }}>
       <Router>
         <div className="App">
           <Header />

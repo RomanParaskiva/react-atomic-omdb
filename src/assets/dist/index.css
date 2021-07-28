@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 html {
@@ -10,6 +11,8 @@ html {
 .App {
   text-align: center;
   background-color: #282c3493;
+  min-height: 100vh;
+  padding-bottom: 1.5rem;
 }
 
 .App-header {
@@ -170,25 +173,60 @@ html {
   color: #a10f0f;
 }
 
-.search {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-}
-.search .col .row {
+.search__wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
 }
-.search .input-field label {
+.search__wrapper .sidebar {
+  position: relative;
+}
+.search__wrapper .sidebar .sidebar__btn {
+  width: 50px;
+  height: 50px;
+  background-color: #663399;
+  border-radius: 50%;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.search__wrapper .sidebar ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  width: 200px;
+  background-color: #666;
+  transform: translateX(-500px);
+  transition: all 0.3s ease;
+}
+.search__wrapper .sidebar ul li {
+  padding: 15px 10px;
+  border-bottom: 1px solid #663399;
+}
+.search__wrapper .sidebar ul.show {
+  transform: translateX(0);
+}
+.search__wrapper .search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: auto;
+}
+.search__wrapper .search .input-field label {
   left: 25px;
-  top: -5px;
+  top: -15px;
   padding: 0.5rem 1.5rem;
-  width: 100%;
   height: 100%;
+  font-size: 1.2rem;
 }
-.search input[type=text] {
+.search__wrapper .search input[type=text] {
   width: 40%;
   min-width: 170px;
   background-color: transparent !important;
@@ -197,8 +235,10 @@ html {
   border: 2px solid #8a2be275;
   margin-bottom: 0;
 }
-
-button[type=submit] {
+.search__wrapper .search .clear {
+  vertical-align: middle;
+}
+.search__wrapper .search button[type=submit] {
   width: 80px;
   margin-left: 10px;
   cursor: pointer;
@@ -264,7 +304,7 @@ button[type=submit] {
 .person-wrapper {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: auto;
   max-width: 1200px;
   padding: 20px;
   margin: 0 auto;
