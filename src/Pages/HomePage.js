@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import Movie from '../components/Movie'
 import Search from '../components/Search'
-import Preloader from '../components/Preloader'
 import Sidebar from '../components/Sidebar'
 
 import { useHttp } from '../hooks/http.hook'
@@ -16,86 +15,103 @@ const HomePage = () => {
     [page, setPage] = useState(1),
     [pageTotal, setPageTotal] = useState(0),
     [searchValue, setSearchValue] = useState(''),
-    { loading, request } = useHttp(),
+    { request } = useHttp(),
     { MOVIE_API_URL, SEARCH_API_URL } = useOptions(switcher),
-    [flag, setFlag] = useState(MOVIE_API_URL)
-
-
-
-  const fetchMovies = async (flag) => {
-    try {
-      const queryStr = '&query=',
-        pageStr = '&page='
-
-      let url 
-
-      if (searchValue) {
-        url = SEARCH_API_URL + queryStr + searchValue
-      } else {
-        url = flag
-      }
-      const data = await request(url + pageStr + page)
-      
-      data.results && setMovies(data.results)
-      setPageTotal(data.total_pages)
-
-    } catch (e) { }
-  }
-
-
+    queryStr = '&query=',
+    pageStr = '&page='
 
   useEffect(() => {
-    fetchMovies(flag)
-  }, [switcher, searchValue, page, flag])
+    const fetchMovies = async () => {
+      try {
+        let data
+
+        if (searchValue) {
+          data = await request(SEARCH_API_URL + pageStr + page + queryStr + searchValue)
+        } else {
+          data = await request(MOVIE_API_URL + pageStr + page)
+        }
+
+        const temp = [...movies, ...data.results]
+
+        data.results && setMovies(temp.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i))
+        setPageTotal(data.total_pages)
+
+      } catch (e) { }
+    }
+    fetchMovies()
+  }, [page])
+
+
+
+
+  useEffect( () => {
+    const fetchMovies = async () =>{
+      try {
+        let data
+        if (searchValue) {
+          data = await request(SEARCH_API_URL + pageStr + page + queryStr + searchValue)
+        } else {
+          data = await request(MOVIE_API_URL + pageStr + 1)
+        }
+
+        const temp = data.results
+
+        data.results && setMovies(temp.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i))
+        setPageTotal(data.total_pages)
+
+      } catch (e) { }
+    }
+
+    fetchMovies()
+  },[switcher, searchValue])
+
 
 
   const nextPage = () => {
     setPage(page + 1)
   }
 
+  const scrollHandler = (e) => {
+    const elHeight = e.target.scrollHeight,
+      scrollTop = e.target.scrollTop
+
+    if (elHeight - scrollTop === e.target.offsetHeight) {
+      nextPage()
+    }
+  }
+
 
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value)
+    setMovies([])
+
   }
 
   const clearSearchValue = () => {
     setSearchValue('')
-    fetchMovies()
-  }
-
-  const runSearch = (e) => {
-    e.preventDefault()
-    fetchMovies()
+    setPage(1)
   }
 
   return (
     <>
       <div className="search__wrapper">
-        <Sidebar setFlag={setFlag} />
+        <Sidebar />
         <Search
           searchValue={searchValue}
           handleSearchValue={handleSearchValue}
-          runSearch={runSearch}
           clearSearchValue={clearSearchValue}
         />
 
       </div>
       {switcher === 'movie' ? <p className="App-intro">Информация о любых фильмах</p> : <p className="App-intro">Информация о любых сериалах</p>}
-
-      <div className="movies">
-        {loading ? (
-          <Preloader />
-        ) : (
-          movies.length > 0 ? movies.map((movie, index) => (
+      <div className="grid__wrapper" onScroll={scrollHandler}>
+        <div className="grid">
+          {movies.length > 0 ? movies.map((movie, index) => (
             <Movie key={`${index}-${movie.title}`} movie={movie} />
           )) : <h3>Ничего не найдено :((</h3>
-        )}
+          }
+        </div>
       </div>
-
-      <div className="flex info__btn-wrapper">
-        <div className="waves-effect waves-light btn-small ma" onClick={nextPage}>Загрузить еще</div>
-      </div>
-
     </>
   )
 }

@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="App-header">
       <Link className="header-title" to="/" ><h2>{switcher === 'movie' ? 'Фильмопоиск' : 'Сериалопоиск'}</h2></Link>
-      <div className="switch">
+      <div className={`switch ${location.pathname === '/peopleSearch' ? 'hidden' : ''}`}>
         <label>
           Фильмы
           <input type="checkbox" name="changeSearch" value={switcher} onClick={changeSwitcher} />

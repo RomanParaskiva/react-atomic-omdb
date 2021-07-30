@@ -16,8 +16,6 @@ const Search = (props) => {
           />
           <label htmlFor="search">Поиск</label>
         </div>
-
-        {/* <button disabled={!props.searchValue} className="waves-effect waves-light btn-small" onClick={props.runSearch} type="submit">искать</button> */}
     </form>
   )
 }

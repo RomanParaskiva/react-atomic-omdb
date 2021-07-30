@@ -12,7 +12,9 @@ html {
   text-align: center;
   background-color: #282c3493;
   min-height: 100vh;
+  height: 100vh;
   padding-bottom: 1.5rem;
+  overflow: hidden;
 }
 
 .App-header {
@@ -44,6 +46,9 @@ html {
 .App-header .switch input {
   display: none;
 }
+.App-header .switch.hidden {
+  display: none;
+}
 
 .App-intro {
   font-size: large;
@@ -57,13 +62,19 @@ html {
 }
 
 /* new css for movie component */
-.movies {
+.grid__wrapper {
+  height: calc(100vh - 70px - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.grid__wrapper .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 2rem;
 }
-.movies a {
+.grid__wrapper .grid a {
   color: inherit;
   text-decoration: none;
   height: 100%;
@@ -106,6 +117,7 @@ html {
   background-color: #8a2be275;
   border-radius: 3px;
   padding: 5px;
+  width: 35px;
 }
 
 .movie__img-wrapper {
@@ -178,6 +190,7 @@ html {
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
+  height: 60px;
 }
 .search__wrapper .sidebar {
   position: relative;
@@ -216,7 +229,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
   width: auto;
 }
 .search__wrapper .search .input-field label {
@@ -304,7 +316,7 @@ html {
 .person-wrapper {
   display: flex;
   width: 100vw;
-  height: auto;
+  height: calc(100vh - 70px);
   max-width: 1200px;
   padding: 20px;
   margin: 0 auto;
@@ -323,6 +335,8 @@ html {
   padding: 10px;
   border-radius: 5px;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
 }
 .person-wrapper .left .person__img-wrapper img {
   max-width: 250px;
@@ -375,6 +389,10 @@ html {
     font-size: 16px;
   }
 
+  .movie {
+    padding: 5px 5px 10px 5px;
+  }
+
   .movie__info .movie__info-wrapper {
     flex-direction: column;
     overflow-y: auto;
@@ -390,6 +408,9 @@ html {
   .movie__info .movie__info-wrapper .screen ul {
     overflow: initial;
   }
+  .movie__info .info__btn-wrapper div {
+    font-size: 10px;
+  }
 
   .person-wrapper {
     flex-direction: column;
@@ -402,24 +423,66 @@ html {
   .person-wrapper .left {
     overflow-y: unset;
   }
+  .person-wrapper .left .person__img-wrapper img {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 694px) and (max-width: 915px) {
-  .movies {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-@media screen and (min-width: 652px) and (max-width: 693px) {
-  .movies {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width: 651px) {
-  .movies {
-    grid-template-columns: 1fr;
+  .App {
+    height: auto;
   }
 
-  .movie {
-    max-width: 100%;
-    margin: auto;
+  .grid__wrapper .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .person-wrapper .right ul {
+    overflow-y: unset;
+  }
+}
+@media screen and (min-width: 100px) and (max-width: 693px) {
+  .App {
+    height: auto;
+  }
+
+  .App-header {
+    height: 50px;
+    padding: 10px;
+  }
+  .App-header a,
+.App-header span {
+    font-size: 10px;
+  }
+
+  .grid__wrapper .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search__wrapper {
+    height: 50px;
+  }
+  .search__wrapper .sidebar {
+    position: absolute;
+    bottom: 10px;
+    z-index: 100;
+  }
+  .search__wrapper .sidebar .sidebar__btn {
+    height: 40px;
+    width: 40px;
+  }
+  .search__wrapper .sidebar ul {
+    margin-top: 0;
+    top: -20%;
+  }
+  .search__wrapper .sidebar ul.show {
+    transform: translateX(50px);
+  }
+  .search__wrapper .search .input-field {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .person-wrapper .right ul {
+    overflow-y: unset;
   }
 }
