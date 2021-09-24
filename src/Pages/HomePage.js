@@ -7,7 +7,7 @@ import Preloader from '../components/Preloader'
 
 import {useHttp} from '../hooks/http.hook'
 
-const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&language=ru&include_adult=true&page="
+const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=15f70723a36f993b310bad745e6681ed&include_adult=true&language=ru&page="
 
 const HomePage = () => {
     const [movies, setMovies] = useState([]),
@@ -19,7 +19,7 @@ const HomePage = () => {
 
   
  
-getMovies()
+
   useEffect(async() => {
 
     const data = await request(MOVIE_API_URL)
