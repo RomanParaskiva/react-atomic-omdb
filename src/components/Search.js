@@ -1,31 +1,21 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 const Search = (props) => {
-  
-useEffect(() => {
-  document.querySelector('.clear').addEventListener('click', () => {
-    props.clearSearchValue()
-  })
-}, [props])
-
 
   return (
     <form className="search col s12">
-      <div className="row">
-      <i className="material-icons clear">clear</i>
+     
+      {props.searchValue ? <i className="material-icons clear" onClick={props.clearSearchValue}>clear</i> : ''}
         <div className="input-field inline">
           <input
             id="search"
             value={props.searchValue}
             onChange={props.handleSearchValue}
             type="text"
-            className="validate"
+            className="validate browser-default"
           />
           <label htmlFor="search">Поиск</label>
         </div>
-
-        <button className="waves-effect waves-light btn-small" onClick={props.runSearch} type="submit">искать</button>
-      </div>
     </form>
   )
 }

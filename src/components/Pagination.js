@@ -3,6 +3,7 @@ import React from 'react'
 
 
 const Pagination = (props) => {
+  console.log(props)
   return (
     <ul className="pagination">
       <li className="disabled"><a href="#!" onClick={props.prevPage}><i className="material-icons">chevron_left</i></a></li>
