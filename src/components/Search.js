@@ -13,6 +13,7 @@ const Search = (props) => {
             onChange={props.handleSearchValue}
             type="text"
             className="validate browser-default"
+            autocomplete="off"
           />
           <label htmlFor="search">Поиск</label>
         </div>
