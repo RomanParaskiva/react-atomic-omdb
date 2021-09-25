@@ -15,34 +15,6 @@ const HomePage = () => {
     [page, setPage] = useState(1),
     [pageTotal, setPageTotal] = useState(0),
     [searchValue, setSearchValue] = useState(''),
-<<<<<<< HEAD
-    {loading, request} = useHttp()
-
-  
- 
-
-  useEffect(async() => {
-
-    const data = await request(MOVIE_API_URL)
-  setMovies(data.results)  
-  }, [])
-
-  const search = async () => {
-
-    const queryStr = '&query=',
-      pageStr = '&page=',
-      url = 'https://api.themoviedb.org/3/search/movie?api_key=15f70723a36f993b310bad745e6681ed&include_adult=true&language=ru'
-      
-    page === undefined ? setPage(0) : setPage(page)
-
-    const data = await request(url + queryStr + searchValue + pageStr + page)
-    console.log(data)
-    data.results && setMovies(data.results)
-    setPage(data.page)
-    setPageTotal(data.total_pages)
-    data.status_message && setErrorMessage(data.status_message)   
-  }
-=======
     { request } = useHttp(),
     { MOVIE_API_URL, SEARCH_API_URL } = useOptions(switcher),
     queryStr = '&query=',
@@ -94,7 +66,6 @@ const HomePage = () => {
   },[switcher, searchValue])
 
 
->>>>>>> a41f9190e0e52a6e954e46616ca71dbfe5d3ec54
 
   const nextPage = () => {
     setPage(page + 1)
